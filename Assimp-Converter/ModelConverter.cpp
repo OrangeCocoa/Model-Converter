@@ -3,6 +3,7 @@
 #include<fstream>
 #include<vector>
 #include<map>
+#include<filesystem>
 
 #include"ModelConverter.h"
 
@@ -151,7 +152,14 @@ public:
 			aiMaterial * mat = scene_->mMaterials[mesh->mMaterialIndex];
 			aiString str;
 			mat->GetTexture(aiTextureType_DIFFUSE, 0, &str);
-			texture = str.C_Str();
+
+			std::string filepath(str.C_Str());
+			size_t find = filepath.find_last_of("\\");
+			if(find == std::string::npos)
+				size_t find = filepath.find_last_of("//");
+
+			filepath = filepath.substr(find + 1);
+			texture = filepath.c_str();
 		}
 
 		Mesh ret;
