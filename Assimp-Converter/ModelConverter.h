@@ -15,4 +15,6 @@ public:
 
 	bool Load(std::string file_path);
 	bool Save(std::string file_path);
+	// model read sample
+	bool Read(std::string file_path);
 };

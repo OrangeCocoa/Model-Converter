@@ -39,23 +39,7 @@ public:
 		std::string name;
 	};
 
-	struct Weight
-	{
-		int bone_num;
-		float weight;
-	};
-
-	struct VertexWeight
-	{
-		std::vector<Weight> weights;
-		aiVector3D vertex_pos;
-		int numbones;
-	};
-
-	struct Surface
-	{
-		std::vector<VertexWeight> vertex_weights;
-	};
+	std::vector<Mesh> meshes_;
 
 	struct AnimationKey
 	{
@@ -77,8 +61,27 @@ public:
 
 	std::map<std::string, int> bone_map_; // name, index
 	int bone_num_;
-	std::vector<Mesh> meshes_;
 	std::vector<Bone> bones_;
+
+	// todo
+	struct Weight
+	{
+		unsigned int bone_number;
+		float weight;
+	};
+
+	struct VertexWeight
+	{
+		std::vector<Weight> weights;
+		aiVector3D vertex_pos;
+		unsigned int numbones;
+	};
+
+	struct Surface
+	{
+		std::vector<VertexWeight> vertex_weights;
+	};
+
 	std::vector<Surface> anim_surf_;
 
 	void ProcessNodeHierarchey(const aiNode* node)
@@ -92,11 +95,11 @@ public:
 		}
 
 		// mesh find
-		for (unsigned i = 0; i < node->mNumMeshes; ++i)
+		for (unsigned int i = 0; i < node->mNumMeshes; ++i)
 		{
 			aiMesh* mesh = scene_->mMeshes[node->mMeshes[i]];
 			meshes_.emplace_back(ProcessMesh(mesh));
-			LoadBones(i, mesh);
+			LoadBones(mesh);
 			bones_.emplace_back(ProcessBone(node, node_name, parent_name));
 		}
 
@@ -149,7 +152,7 @@ public:
 
 		if (mesh->mMaterialIndex >= 0)
 		{
-			aiMaterial * mat = scene_->mMaterials[mesh->mMaterialIndex];
+			aiMaterial* mat = scene_->mMaterials[mesh->mMaterialIndex];
 			aiString str;
 			mat->GetTexture(aiTextureType_DIFFUSE, 0, &str);
 
@@ -204,7 +207,6 @@ public:
 		const aiAnimation* animation = scene_->mAnimations[0];
 		const aiNodeAnim* node_anim = ProcessNodeAnim(animation, node_name);
 
-
 		if (bone_map_.find(node_name) != bone_map_.end())
 		{
 			int bone_index = bone_map_[node_name];
@@ -231,9 +233,9 @@ public:
 					key_pos = curr_pos_key.mValue;
 
 				}
-				else {
+				else
+				{
 					key_pos = bone.position;
-
 				}
 
 				AnimationKey key;
@@ -247,12 +249,13 @@ public:
 		return bone;
 	}
 
-	void LoadBones(int index, const aiMesh* mesh)
+	void LoadBones(const aiMesh* mesh)
 	{
-		for (unsigned int i = 0; i < mesh->mNumBones; i++)
+		for (unsigned int i = 0; i < mesh->mNumBones; ++i)
 		{
-			int bone_index = 0;
-			std::string bone_name(mesh->mBones[i]->mName.data);
+			const auto& bone = mesh->mBones[i];
+			unsigned int bone_index = 0;
+			std::string bone_name(bone->mName.data);
 
 			if (bone_map_.find(bone_name) == bone_map_.end())
 			{
@@ -260,9 +263,17 @@ public:
 				bone_num_++;
 				bone_map_[bone_name] = bone_index;
 			}
-			else {
+			else 
+			{
 				bone_index = bone_map_[bone_name];
 			}
+
+			/*for (unsigned int j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
+			{
+				unsigned int vertex_ID = m_Entries[MeshIndex].BaseVertex + mesh->mBones[i]->mWeights[j].mVertexId;
+				float weight = mesh->mBones[i]->mWeights[j].mWeight;
+				bones_[vertex_ID].AddBoneData(bone_index, weight);
+			}*/
 		}
 	}
 };
@@ -291,45 +302,49 @@ bool ModelConverter::Load(std::string file_path)
 bool ModelConverter::Save(std::string file_path)
 {
 	std::ofstream file;
-	file.open(file_path, std::ios::out | std::ios::binary);
+	file.open(file_path, std::ios::out | std::ios::binary | std::ios::trunc);
 
 	unsigned int mesh_cnt = impl_->meshes_.size();
-
 	file.write(reinterpret_cast<char*>(&mesh_cnt), sizeof(unsigned int));
 
 	for (unsigned int m = 0; m < mesh_cnt; ++m)
 	{
-		auto & mesh = impl_->meshes_[m];
+		auto& mesh = impl_->meshes_[m];
 
 		unsigned int vtx_cnt = mesh.vertices.size();
-
 		file.write(reinterpret_cast<char*>(&vtx_cnt), sizeof(unsigned int));
 
 		for (unsigned int v = 0; v < vtx_cnt; ++v)
 		{
-			auto & vtx = mesh.vertices[v];
-
+			auto& vtx = mesh.vertices[v];
 			file.write(reinterpret_cast<char*>(&vtx), sizeof(Impl::Vertex));
 		}
 
 		unsigned int index_cnt = mesh.indices.size();
-
 		file.write(reinterpret_cast<char*>(&index_cnt), sizeof(unsigned int));
 
 		for (unsigned int i = 0; i < index_cnt; ++i)
 		{
 			auto & index = mesh.indices[i];
-
 			file.write(reinterpret_cast<char*>(&index), sizeof(unsigned int));
 		}
 
-		unsigned texture_str_cnt = mesh.texture.size();
+		unsigned int bone_cnt = impl_->bones_.size();
+		//file.write(reinterpret_cast<char*>(&bone_cnt), sizeof(unsigned int));
 
+		for (unsigned int b = 0; b < bone_cnt; ++b)
+		{
+			auto& bone = impl_->bones_[b];
+			//file.write(reinterpret_cast<char*>(&bone), sizeof(unsigned int));
+		}
+
+		unsigned texture_str_cnt = mesh.texture.size();
 		file.write(reinterpret_cast<char*>(&texture_str_cnt), sizeof(unsigned int));
 
 		if (texture_str_cnt > 0)
 		{
 			std::cout << mesh.name.c_str() << " texture " << mesh.texture.c_str() << std::endl;
+
 			file.write(mesh.texture.c_str(), sizeof(char) * texture_str_cnt);
 		}
 	}
@@ -337,5 +352,60 @@ bool ModelConverter::Save(std::string file_path)
 	file.close();
 
 	std::cout << "モデルファイルを .pzm 形式に変換しました" << std::endl;
+	return true;
+}
+
+bool ModelConverter::Read(std::string file_path)
+{
+	std::ifstream file;
+	file.open(file_path, std::ios::in | std::ios::binary);
+
+	impl_->meshes_.clear();
+
+	unsigned int mesh_cnt = 0;
+	file.read(reinterpret_cast<char*>(&mesh_cnt), sizeof(unsigned int));
+
+	impl_->meshes_.resize(mesh_cnt);
+
+	for (unsigned int m = 0; m < mesh_cnt; ++m)
+	{
+		auto& mesh = impl_->meshes_[m];
+
+		unsigned int vtx_cnt = 0;
+		file.read(reinterpret_cast<char*>(&vtx_cnt), sizeof(unsigned int));
+		mesh.vertices.resize(vtx_cnt);
+
+		for (unsigned int v = 0; v < vtx_cnt; ++v)
+		{
+			auto& vtx = mesh.vertices[v];
+			file.read(reinterpret_cast<char*>(&vtx), sizeof(Impl::Vertex));
+		}
+
+		unsigned int index_cnt = 0;
+		file.read(reinterpret_cast<char*>(&index_cnt), sizeof(unsigned int));
+		mesh.indices.resize(index_cnt);
+
+		for (unsigned int i = 0; i < index_cnt; ++i)
+		{
+			unsigned int index = 0;
+			file.read(reinterpret_cast<char*>(&index), sizeof(unsigned int));
+		}
+
+		unsigned int texture_str_cnt = 0;
+		file.read(reinterpret_cast<char*>(&texture_str_cnt), sizeof(unsigned int));
+
+		if (texture_str_cnt > 0)
+		{
+			unsigned int tex_width = 0;
+			std::string tex_name("");
+
+			file.read(reinterpret_cast<char*>(&tex_name), sizeof(char) * texture_str_cnt);
+		}
+	}
+
+	file.close();
+
+	std::cout << "モデルファイルを読み込みました" << std::endl;
+
 	return true;
 }
