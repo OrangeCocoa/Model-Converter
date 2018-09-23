@@ -43,7 +43,7 @@ public:
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;
 		std::string texture;
-		Material material_;
+		Material material;
 		std::string name;
 	};
 
@@ -184,6 +184,7 @@ public:
 		ret.vertices = vertices;
 		ret.indices = indices;
 		ret.texture = texture;
+		ret.material = material;
 
 		return ret;
 	}
@@ -354,12 +355,15 @@ bool ModelConverter::Save(std::string file_path)
 
 		unsigned texture_str_cnt = mesh.texture.size();
 		file.write(reinterpret_cast<char*>(&texture_str_cnt), sizeof(unsigned int));
+		mesh.texture.resize(texture_str_cnt);
 
 		if (texture_str_cnt > 0)
 		{
-			std::cout << mesh.name.c_str() << " texture " << mesh.texture.c_str() << std::endl;
+			std::cout << " texture " << mesh.texture.c_str() << std::endl;
 
 			file.write(mesh.texture.c_str(), sizeof(char) * texture_str_cnt);
+
+			//file << mesh.texture << std::endl;
 		}
 	}
 
@@ -401,19 +405,29 @@ bool ModelConverter::Read(std::string file_path)
 
 		for (unsigned int i = 0; i < index_cnt; ++i)
 		{
-			unsigned int index = 0;
+			auto& index = mesh.indices[i];
 			file.read(reinterpret_cast<char*>(&index), sizeof(unsigned int));
 		}
 
 		unsigned int texture_str_cnt = 0;
 		file.read(reinterpret_cast<char*>(&texture_str_cnt), sizeof(unsigned int));
+		mesh.texture.resize(texture_str_cnt);
 
 		if (texture_str_cnt > 0)
 		{
 			unsigned int tex_width = 0;
-			std::string tex_name("");
+			std::string name;
 
-			file.read(reinterpret_cast<char*>(&tex_name), sizeof(char) * texture_str_cnt);
+			for (int c = 0; c < texture_str_cnt; ++c)
+			{
+				char ch = 0;
+				file.read(reinterpret_cast<char*>(&ch), sizeof(char));
+				name.push_back(ch);
+			}
+
+			mesh.texture = name;
+
+			std::cout << " texture " << mesh.texture.c_str() << std::endl;
 		}
 	}
 
