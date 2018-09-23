@@ -8,19 +8,19 @@ unsigned int メッシュの数
 
 	頂点数分ループ
 	{
-		float[3] 頂点[i]の位置ベクトル
-		float[3] 頂点[i]の法線ベクトル
-		float[2] 頂点[i]のテクスチャ座標
+		float[3] 頂点[i]の位置ベクトル position
+		float[3] 頂点[i]の法線ベクトル normal
+		float[2] 頂点[i]のテクスチャ座標 texcoord
 	}
 
 	unsigned int メッシュ[n]のインデックス数
 
 	インデックス数分ループ
 	{
-		unsigned int インデックス1つ目の番号
+		unsigned int インデックスの番号
 	}
 
 	unsigned int テクスチャ名文字数
 
-	char[テクスチャ名文字数] テクスチャ名文字
+	char[テクスチャ名文字数] テクスチャ名
 }

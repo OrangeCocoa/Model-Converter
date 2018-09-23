@@ -31,11 +31,19 @@ public:
 		aiVector2D texcoord;
 	};
 
+	struct Material
+	{
+		aiColor4D diffuse;
+		aiColor4D specular;
+		aiColor4D ambient;
+	};
+
 	struct Mesh
 	{
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;
 		std::string texture;
+		Material material_;
 		std::string name;
 	};
 
@@ -114,6 +122,7 @@ public:
 	{
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;
+		Material material;
 		std::string texture;
 
 		for (unsigned int n = 0; n < mesh->mNumVertices; ++n)
@@ -153,6 +162,11 @@ public:
 		if (mesh->mMaterialIndex >= 0)
 		{
 			aiMaterial* mat = scene_->mMaterials[mesh->mMaterialIndex];
+
+			aiGetMaterialColor(mat, AI_MATKEY_COLOR_DIFFUSE, &material.diffuse);
+			aiGetMaterialColor(mat, AI_MATKEY_COLOR_SPECULAR, &material.specular);
+			aiGetMaterialColor(mat, AI_MATKEY_COLOR_AMBIENT, &material.ambient);
+
 			aiString str;
 			mat->GetTexture(aiTextureType_DIFFUSE, 0, &str);
 
@@ -270,7 +284,7 @@ public:
 
 			/*for (unsigned int j = 0; j < mesh->mBones[i]->mNumWeights; ++j)
 			{
-				unsigned int vertex_ID = m_Entries[MeshIndex].BaseVertex + mesh->mBones[i]->mWeights[j].mVertexId;
+				unsigned int vertex_ID = mesh->mBones[i]->mWeights[j].mVertexId;
 				float weight = mesh->mBones[i]->mWeights[j].mWeight;
 				bones_[vertex_ID].AddBoneData(bone_index, weight);
 			}*/
