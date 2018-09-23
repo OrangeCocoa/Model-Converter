@@ -418,7 +418,7 @@ bool ModelConverter::Read(std::string file_path)
 			unsigned int tex_width = 0;
 			std::string name;
 
-			for (int c = 0; c < texture_str_cnt; ++c)
+			for (unsigned int c = 0; c < texture_str_cnt; ++c)
 			{
 				char ch = 0;
 				file.read(reinterpret_cast<char*>(&ch), sizeof(char));
