@@ -362,8 +362,6 @@ bool ModelConverter::Save(std::string file_path)
 			std::cout << " texture " << mesh.texture.c_str() << std::endl;
 
 			file.write(mesh.texture.c_str(), sizeof(char) * texture_str_cnt);
-
-			//file << mesh.texture << std::endl;
 		}
 	}
 
