@@ -3,7 +3,6 @@
 #include<fstream>
 #include<vector>
 #include<map>
-#include<filesystem>
 
 #include"ModelConverter.h"
 
@@ -17,6 +16,7 @@
 #include <DirectXMath.h>
 
 #pragma comment(lib, "assimp.lib")
+#pragma comment(lib, "DirectXTK.lib")
 
 class ModelConverter::Impl
 {
@@ -94,12 +94,12 @@ public:
 
 	void ProcessNodeHierarchey(const aiNode* node)
 	{
-		std::string node_name(node->mName.data);
+		std::string node_name = node->mName.C_Str();
 		std::string parent_name = "none";
 
 		if (node->mParent)
 		{
-			parent_name = std::string(node->mParent->mName.data);
+			parent_name = node->mParent->mName.C_Str();
 		}
 
 		// mesh find
@@ -195,7 +195,7 @@ public:
 		{
 			const aiNodeAnim* node_anim = animation->mChannels[i];
 
-			if (std::string(node_anim->mNodeName.data) == node_name)
+			if (std::string(node_anim->mNodeName.C_Str()) == node_name)
 			{
 				return node_anim;
 			}
@@ -270,12 +270,12 @@ public:
 		{
 			const auto& bone = mesh->mBones[i];
 			unsigned int bone_index = 0;
-			std::string bone_name(bone->mName.data);
+			std::string bone_name = bone->mName.C_Str();
 
 			if (bone_map_.find(bone_name) == bone_map_.end())
 			{
 				bone_index = bone_num_;
-				bone_num_++;
+				++bone_num_;
 				bone_map_[bone_name] = bone_index;
 			}
 			else 
@@ -413,10 +413,9 @@ bool ModelConverter::Read(std::string file_path)
 
 		if (texture_str_cnt > 0)
 		{
-			unsigned int tex_width = 0;
 			std::string name;
 
-			for (int c = 0; c < texture_str_cnt; ++c)
+			for (unsigned int c = 0; c < texture_str_cnt; ++c)
 			{
 				char ch = 0;
 				file.read(reinterpret_cast<char*>(&ch), sizeof(char));
