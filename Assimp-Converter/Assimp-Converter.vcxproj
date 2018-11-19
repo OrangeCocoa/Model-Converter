@@ -72,6 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)OutBuilds\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)IntBuilds\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -79,6 +81,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)</OutDir>
+    <IntDir>$(SolutionDir)IntBuilds\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -94,12 +97,14 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>Include</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Lib/Debug</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ProfileGuidedDatabase>$(IntDir)$(TargetName).pgd</ProfileGuidedDatabase>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -134,7 +139,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
       <AdditionalIncludeDirectories>Include</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +147,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>Lib/Release</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <LinkStatus>false</LinkStatus>
+      <ProfileGuidedDatabase>$(IntDir)$(TargetName).pgd</ProfileGuidedDatabase>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -168,22 +177,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
-    <ClInclude Include="AssimpConverter.h" />
-    <ClInclude Include="Common.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="ModelConverter.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Src\Animation.h" />
+    <ClInclude Include="Src\AssimpConverter.h" />
+    <ClInclude Include="Src\Common.h" />
+    <ClInclude Include="Src\Material.h" />
+    <ClInclude Include="Src\Mesh.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDNode.h" />
+    <ClInclude Include="Src\MMDFileRoader\PMXFile.h" />
+    <ClInclude Include="Src\MMDFileRoader\PMXModel.h" />
+    <ClInclude Include="Src\Model.h" />
+    <ClInclude Include="Src\ModelConverter.h" />
+    <ClInclude Include="Src\Node.h" />
+    <ClInclude Include="Src\stdafx.h" />
+    <ClInclude Include="Src\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssimpConverter.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="ModelConverter.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="Src\AssimpConverter.cpp" />
+    <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\MMDFileRoader\MMDNode.cpp" />
+    <ClCompile Include="Src\MMDFileRoader\PMXFile.cpp" />
+    <ClCompile Include="Src\ModelConverter.cpp" />
+    <ClCompile Include="Src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

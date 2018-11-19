@@ -13,51 +13,69 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\MMD">
+      <UniqueIdentifier>{3eb2828c-2615-4504-8961-f67ae2422ba6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="Src\Animation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
+    <ClInclude Include="Src\AssimpConverter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ModelConverter.h">
+    <ClInclude Include="Src\Common.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Material.h">
+    <ClInclude Include="Src\Material.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Common.h">
+    <ClInclude Include="Src\Mesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
+    <ClInclude Include="Src\Model.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
+    <ClInclude Include="Src\ModelConverter.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
+    <ClInclude Include="Src\Node.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Node.h">
+    <ClInclude Include="Src\stdafx.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="AssimpConverter.h">
+    <ClInclude Include="Src\targetver.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDNode.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\PMXFile.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\PMXModel.h">
+      <Filter>ソース ファイル\MMD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="Src\AssimpConverter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Src\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ModelConverter.cpp">
+    <ClCompile Include="Src\ModelConverter.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="AssimpConverter.cpp">
+    <ClCompile Include="Src\stdafx.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MMDFileRoader\PMXFile.cpp">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MMDFileRoader\MMDNode.cpp">
+      <Filter>ソース ファイル\MMD</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
