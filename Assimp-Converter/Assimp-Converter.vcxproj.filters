@@ -57,6 +57,39 @@
     <ClInclude Include="Src\MMDFileRoader\PMXModel.h">
       <Filter>ソース ファイル\MMD</Filter>
     </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDMorph.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDModel.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\PMXNode.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\VMDFile.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDNodeManager.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDIKManager.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDMorphManager.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDPhysicsManager.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDPhysics.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDIKSolver.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MMDFileRoader\MMDCommon.h">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AssimpConverter.cpp">
@@ -75,6 +108,18 @@
       <Filter>ソース ファイル\MMD</Filter>
     </ClCompile>
     <ClCompile Include="Src\MMDFileRoader\MMDNode.cpp">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MMDFileRoader\MMDMorph.cpp">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MMDFileRoader\MMDModel.cpp">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MMDFileRoader\VMDFile.cpp">
+      <Filter>ソース ファイル\MMD</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MMDFileRoader\MMDPhysics.cpp">
       <Filter>ソース ファイル\MMD</Filter>
     </ClCompile>
   </ItemGroup>

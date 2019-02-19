@@ -1,11 +1,7 @@
 #pragma once
 
+#include"PMXNode.h"
 #include"PMXFile.h"
-
-class PMXNode
-{
-
-};
 
 class PMXModel
 {

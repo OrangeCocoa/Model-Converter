@@ -96,7 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;Include\bullet3</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
@@ -138,8 +138,9 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Include;Include\bullet3</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -182,9 +183,20 @@
     <ClInclude Include="Src\Common.h" />
     <ClInclude Include="Src\Material.h" />
     <ClInclude Include="Src\Mesh.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDCommon.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDIKManager.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDIKSolver.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDModel.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDMorph.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDMorphManager.h" />
     <ClInclude Include="Src\MMDFileRoader\MMDNode.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDNodeManager.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDPhysics.h" />
+    <ClInclude Include="Src\MMDFileRoader\MMDPhysicsManager.h" />
     <ClInclude Include="Src\MMDFileRoader\PMXFile.h" />
     <ClInclude Include="Src\MMDFileRoader\PMXModel.h" />
+    <ClInclude Include="Src\MMDFileRoader\PMXNode.h" />
+    <ClInclude Include="Src\MMDFileRoader\VMDFile.h" />
     <ClInclude Include="Src\Model.h" />
     <ClInclude Include="Src\ModelConverter.h" />
     <ClInclude Include="Src\Node.h" />
@@ -194,8 +206,12 @@
   <ItemGroup>
     <ClCompile Include="Src\AssimpConverter.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\MMDFileRoader\MMDModel.cpp" />
+    <ClCompile Include="Src\MMDFileRoader\MMDMorph.cpp" />
     <ClCompile Include="Src\MMDFileRoader\MMDNode.cpp" />
+    <ClCompile Include="Src\MMDFileRoader\MMDPhysics.cpp" />
     <ClCompile Include="Src\MMDFileRoader\PMXFile.cpp" />
+    <ClCompile Include="Src\MMDFileRoader\VMDFile.cpp" />
     <ClCompile Include="Src\ModelConverter.cpp" />
     <ClCompile Include="Src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
